@@ -20,9 +20,17 @@
  * Více informací na http://www.itnetwork.cz/licence
  */
 
-
+/**
+ * Základní URL adresa API serveru.
+ */
 const API_URL = "http://localhost:8080";
 
+/**
+ * Základní funkce pro načítání dat z API.
+ * @param {string} url Cílová URL adresa, ke které se připojuje.
+ * @param {Object} requestOptions Konfigurační objekt pro fetch požadavek.
+ * @returns {Promise} Promise objekt, který představuje odpověď od serveru.
+ */
 const fetchData = (url, requestOptions) => {
     const apiUrl = `${API_URL}${url}`;
 
@@ -40,6 +48,13 @@ const fetchData = (url, requestOptions) => {
         });
 };
 
+
+/**
+ * Načítá data pomocí GET metody.
+ * @param {string} url URL cesta k zdroji.
+ * @param {Object} params Parametry pro GET požadavek.
+ * @returns {Promise} Promise objekt s daty.
+ */
 export const apiGet = (url, params) => {
     const filteredParams = Object.fromEntries(
         Object.entries(params || {}).filter(([_, value]) => value != null)
@@ -53,6 +68,13 @@ export const apiGet = (url, params) => {
     return fetchData(apiUrl, requestOptions);
 };
 
+
+/**
+ * Odesílá data pomocí POST metody.
+ * @param {string} url URL cesta k zdroji.
+ * @param {Object} data Data k odeslání.
+ * @returns {Promise} Promise objekt s odpovědí serveru.
+ */
 export const apiPost = (url, data) => {
     const requestOptions = {
         method: "POST",
@@ -63,6 +85,13 @@ export const apiPost = (url, data) => {
     return fetchData(url, requestOptions);
 };
 
+
+/**
+ * Aktualizuje data pomocí PUT metody.
+ * @param {string} url URL cesta k zdroji.
+ * @param {Object} data Data pro aktualizaci.
+ * @returns {Promise} Promise objekt s odpovědí serveru.
+ */
 export const apiPut = (url, data) => {
     const requestOptions = {
         method: "PUT",
@@ -73,6 +102,12 @@ export const apiPut = (url, data) => {
     return fetchData(url, requestOptions);
 };
 
+
+/**
+ * Maže data pomocí DELETE metody.
+ * @param {string} url URL cesta k zdroji.
+ * @returns {Promise} Promise objekt reprezentující stav operace.
+ */
 export const apiDelete = (url) => {
     const requestOptions = {
         method: "DELETE",

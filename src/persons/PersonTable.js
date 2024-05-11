@@ -22,8 +22,20 @@
 
 import React from "react";
 import {Link} from "react-router-dom";
+/**
+ * Komponenta PersonTable zobrazuje tabulku osob s akčními tlačítky pro každou osobu.
+ * Každý řádek tabulky obsahuje jméno osoby a skupinu tlačítek pro správu osobních údajů.
+ * Umožňuje uživatelům procházet, upravovat nebo odstraňovat záznamy osob.
+ *
+ * @param {Object} props - Vlastnosti komponenty.
+ * @param {string} props.label - Nadpis, který se zobrazí nad tabulkou.
+ * @param {Array} props.items - Seznam osob, které mají být zobrazeny v tabulce.
+ * @param {Function} props.deletePerson - Funkce volaná pro odstranění osoby.
+ * @returns {JSX.Element} Element zobrazující tabulku osob s možnostmi správy.
+ */
 
 const PersonTable = ({label, items, deletePerson}) => {
+    //Vyrenderování pomocí JSX
     return (
         <div>
             <p>

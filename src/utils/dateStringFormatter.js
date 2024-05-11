@@ -20,10 +20,20 @@
  * Více informací na http://www.itnetwork.cz/licence
  */
 
+/**
+ * Formátuje řetězec obsahující datum do předepsaného formátu.
+ * Pokud je parametr `locale` nastaven na `true`, vrátí datum ve formátu specifickém pro Českou republiku.
+ * V opačném případě vrátí datum ve formátu ISO (YYYY-MM-DD).
+ *
+ * @param {string} str - Vstupní řetězec s datem.
+ * @param {boolean} [locale=false] - Určuje, zda se má použít lokální formátování.
+ * @returns {string} Formátované datum jako řetězec.
+ */
 export const dateStringFormatter = (str, locale = false) => {
     const d = new Date(str);
 
     if (locale) {
+        // Použije český lokální formát pro datum.
         return d.toLocaleDateString("cs-CZ", {
             year: "numeric",
             month: "long",
@@ -31,10 +41,12 @@ export const dateStringFormatter = (str, locale = false) => {
         });
     }
 
+    // Získá jednotlivé složky data.
     const year = d.getFullYear();
     const month = "" + (d.getMonth() + 1);
     const day = "" + d.getDate();
 
+    // Formátuje datum do formátu YYYY-MM-DD.
     return [
         year,
         month.length < 2 ? "0" + month : month,

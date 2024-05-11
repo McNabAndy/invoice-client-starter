@@ -24,7 +24,8 @@ export const InvoicesStatistic= () => {
     useEffect(() => {
         apiGet("/api/invoices/statistics").then((data) => setStatistic(data));
     }, []);
-
+    
+    //Vyrenderování pomocí JSX
     return(
         <div>
             <h1>Statistiky faktur</h1>
@@ -59,6 +60,7 @@ export const PersonStatistic= () => {
         apiGet("/api/persons/statistics").then((data) => setStatistic(data));
     }, []);
 
+    //Vyrenderování pomocí JSX
     return(
         <div>
         <h1>Statistiky osob</h1>

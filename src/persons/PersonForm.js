@@ -22,18 +22,25 @@
 
 import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-
 import {apiGet, apiPost, apiPut} from "../utils/api";
-
 import InputField from "../components/InputField";
 import InputCheck from "../components/InputCheck";
 import FlashMessage from "../components/FlashMessage";
-
 import Country from "./Country";
 
+/**
+ * Komponenta pro vytvoření nebo úpravu osobnosti. Tato komponenta používá formulář
+ * k získání a úpravě informací o osobě, jako jsou jméno, identifikační číslo,
+ * bankovní údaje atd. Data jsou získána a odeslána na server prostřednictvím API.
+ *
+ * @returns {JSX.Element} Formulář pro vytvoření nebo úpravu osobnosti.
+ */
 const PersonForm = () => {
     const navigate = useNavigate();
+    // Extrahuje ID z URL pomocí React Router hooku `useParams`.
     const {id} = useParams();
+
+    // Stav pro ukládání údajů o osobě
     const [person, setPerson] = useState({
         name: "",
         identificationNumber: "",
@@ -49,16 +56,32 @@ const PersonForm = () => {
         country: Country.CZECHIA,
         note: ""
     });
+
+    // Stav pro sledování odeslání a výsledku operace
     const [sentState, setSent] = useState(false);
     const [successState, setSuccess] = useState(false);
     const [errorState, setError] = useState(null);
 
+
+    /**
+     * Načítá seznam osob a, pokud existuje id, načítá detaily o osobe.
+     * Závisí na změně id, aby se přizpůsobila aktualizacím faktury.
+     */
     useEffect(() => {
         if (id) {
             apiGet("/api/persons/" + id).then((data) => setPerson(data));
         }
     }, [id]);
 
+
+
+    /**
+    * Ošetřuje událost odeslání formuláře. Funkce se rozhodne mezi aktualizací stávající osoby
+    * nebo vytvořením nové, v závislosti na přítomnosti `id`. Po úspěšné operaci přesměruje uživatele
+    * na stránku s přehledem osob. Při chybě se zobrazí chybová zpráva.
+    *
+    * @param {Event} e - událost, která je vyvolána odesláním formuláře
+    */
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -79,6 +102,7 @@ const PersonForm = () => {
     const sent = sentState;
     const success = successState;
 
+    //Vyrenderování pomocí JSX
     return (
         <div>
             <h1>{id ? "Upravit" : "Vytvořit"} osobnost</h1>

@@ -38,6 +38,12 @@ import InvoiceDetail from "./invoice/InvoiceDetail";
 import InvoiceForm from "./invoice/InvoiceForm";
 import { InvoicesStatistic, PersonStatistic } from "./invoice/Statistic";
 
+/**
+ * React projekt umožňuje uživatelům spravovat informace o osobách a fakturách.
+ *  Aplikace poskytuje funkcionality jako zobrazení seznamu osob a faktur, vytvoření 
+ * nových záznamů, úpravy existujících záznamů, a zobrazení detailních 
+ * informací a statistik pro obě entity.
+ */
 export function App() {
   return (
     <Router>
@@ -56,6 +62,7 @@ export function App() {
             </li>
           </ul>
         </nav>
+
 
         <Routes>
           <Route index element={<Navigate to={"/persons"} />} />

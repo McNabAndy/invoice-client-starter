@@ -21,15 +21,21 @@
  */
 
 import React, {useEffect, useState} from "react";
-
 import {apiDelete, apiGet} from "../utils/api";
-
 import PersonTable from "./PersonTable";
 
-
+/**
+ * Komponenta PersonIndex slouží jako správcovská stránka pro seznam osob.
+ * Načte a zobrazí seznam všech osob pomocí komponenty PersonTable a umožňuje odstraňování osob.
+ * 
+ * @returns {JSX.Element} Element obsahující nadpis a tabulku osob.
+ */
 const PersonIndex = () => {
+
+    // Stav pro ukládání seznamu osob 
     const [persons, setPersons] = useState([]);
 
+    // Funkce pro odstranění osoby podle ID.
     const deletePerson = async (id) => {
         try {
             await apiDelete("/api/persons/" + id);
@@ -39,11 +45,12 @@ const PersonIndex = () => {
         }
         setPersons(persons.filter((item) => item._id !== id));
     };
-
+    // Načítání seznamu osob
     useEffect(() => {
         apiGet("/api/persons").then((data) => setPersons(data));
     }, []);
 
+//Vyrenderování pomocí JSX
     return (
         <div>
             <h1>Seznam osob</h1>
