@@ -12,11 +12,11 @@ export const InvoiceBuyer = ({label, invoicesList}) => {
         return(
             <div>
                 <p>
-                    {label} {invoicesList.length}
+                <strong className="text-success">{label}</strong> {invoicesList.length}
                 </p>
     
-                <table className="table table-bordered">
-                    <thead>
+                <table className="table table-bordered table table-hover">
+                    <thead className="table-success">
                     <tr>
                         <th>#</th>
                         <th>Číslo faktury</th>
@@ -42,7 +42,7 @@ export const InvoiceBuyer = ({label, invoicesList}) => {
     //Vyrenderování pomocí JSX v příadě neplatné podmínky
     return (
         <div>
-            <p>{label} {invoicesList.length}</p>
+            <strong className="text-success">{label}</strong> {invoicesList.length}
         </div>
     )  
 }
@@ -62,11 +62,11 @@ export const InvoiceSeller = ({label, invoicesList}) => {
         return(
             <div>
                 <p>
-                    {label} {invoicesList.length}
+                <strong className="text-danger">{label}</strong> {invoicesList.length}
                 </p>
     
-                <table className="table table-bordered">
-                    <thead>
+                <table className="table table-bordered table table-hover">
+                    <thead className="table-danger">
                     <tr>
                         <th>#</th>
                         <th>Číslo faktury</th>
@@ -93,7 +93,7 @@ export const InvoiceSeller = ({label, invoicesList}) => {
     //Vyrenderování pomocí JSX v příadě neplatné podmínky
     return (
         <div>
-            <p>{label} {invoicesList.length}</p>
+            <strong className="text-danger">{label}</strong> {invoicesList.length}
         </div>
     )  
     

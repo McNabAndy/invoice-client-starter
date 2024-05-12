@@ -42,12 +42,12 @@ const PersonTable = ({label, items, deletePerson}) => {
                 {label} {items.length}
             </p>
 
-            <table className="table table-bordered">
-                <thead>
+            <table className="table table-bordered bordered table table-hover">
+                <thead className="table-primary">
                 <tr>
-                    <th>#</th>
+                    <th className="col-sm-1">#</th>
                     <th>Jméno</th>
-                    <th colSpan={3} className="text-end">Akce</th>
+                    <th className="col-sm-3" colSpan={3}>Akce</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -55,17 +55,17 @@ const PersonTable = ({label, items, deletePerson}) => {
                     <tr key={index + 1}>
                         <td>{index + 1}</td>
                         <td>{item.name}</td>
-                        <td className="text-end">
-                            <div className="btn-group">
+                        <td >
+                            <div className="btn-group" style={{ width: '100%', display: 'flex'  }}>
                                 <Link
                                     to={"/persons/show/" + item._id}
-                                    className="btn btn-sm btn-info"
+                                    className="btn btn-sm btn-info me-2"
                                 >
                                     Zobrazit
                                 </Link>
                                 <Link
                                     to={"/persons/edit/" + item._id}
-                                    className="btn btn-sm btn-warning"
+                                    className="btn btn-sm btn-warning me-2"
                                 >
                                     Upravit
                                 </Link>

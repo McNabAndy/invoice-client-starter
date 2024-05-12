@@ -20,9 +20,9 @@
  * Více informací na http://www.itnetwork.cz/licence
  */
 
-import React, {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
-import {apiGet} from "../utils/api";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { apiGet } from "../utils/api";
 import Country from "./Country";
 import { InvoiceBuyer, InvoiceSeller } from "../invoice/InvoicePurchase";
 
@@ -35,89 +35,102 @@ import { InvoiceBuyer, InvoiceSeller } from "../invoice/InvoicePurchase";
  */
 
 const PersonDetail = () => {
-    // Extrahuje ID z URL pomocí React Router hooku `useParams`.
-    const {id} = useParams();
+  // Extrahuje ID z URL pomocí React Router hooku `useParams`.
+  const { id } = useParams();
 
-    // Lokální stav `invoice` pro ukládání načtených dat o faktuře.
-    const [person, setPerson] = useState({});
+  // Lokální stav `invoice` pro ukládání načtených dat o faktuře.
+  const [person, setPerson] = useState({});
 
-    // Lokální stav uchovávající aktuální seznam Dodavatelů
-    const [sellerList, setSellerList] = useState([]);
+  // Lokální stav uchovávající aktuální seznam Dodavatelů
+  const [sellerList, setSellerList] = useState([]);
 
-    // Lokální stav uchovávající aktuální seznam Odběratelů
-    const [buyerList, setBuyerList] = useState([]);
+  // Lokální stav uchovávající aktuální seznam Odběratelů
+  const [buyerList, setBuyerList] = useState([]);
 
+  // Effect hook pro načtení dat o faktuře z API při prvním renderování komponenty nebo změně ID.
+  useEffect(() => {
+    apiGet("/api/persons/" + id)
+      .then((data) => {
+        setPerson(data);
+        // Nyní je bezpečné volat další API s použitím `data.identificationNumber`
+        // Provedení paralelních API volání pro získání seznamů faktur
+        return Promise.all([
+          apiGet(
+            "/api/identification/" + data.identificationNumber + "/purchases"
+          ),
+          apiGet("/api/identification/" + data.identificationNumber + "/sales"),
+        ]);
+      })
+      .then(([purchaseData, salesData]) => {
+        setSellerList(purchaseData);
+        setBuyerList(salesData);
+      })
+      .catch((error) => {
+        console.error("Chyba při načítání osoby nebo faktur", error);
+      });
+  }, [id]); // Závislost na ID zajišťuje aktualizaci dat při změně ID v URL.
 
-    // Effect hook pro načtení dat o faktuře z API při prvním renderování komponenty nebo změně ID.
-    useEffect(() => {
-        apiGet("/api/persons/" + id)
-            .then((data) => {
-                setPerson(data);
-                // Nyní je bezpečné volat další API s použitím `data.identificationNumber`
-                // Provedení paralelních API volání pro získání seznamů faktur
-                return Promise.all([
-                    apiGet("/api/identification/" + data.identificationNumber + "/purchases"),
-                    apiGet("/api/identification/" + data.identificationNumber + "/sales")
-                ]);
-            })
-            .then(([purchaseData, salesData]) => {
-                setSellerList(purchaseData);
-                setBuyerList(salesData);
-            })
-            .catch((error) => {
-                console.error("Chyba při načítání osoby nebo faktur", error);
-            });
-    }, [id]);// Závislost na ID zajišťuje aktualizaci dat při změně ID v URL.
+  // Konstanta pro upravení názvu země
+  const country =
+    Country.CZECHIA === person.country ? "Česká republika" : "Slovensko";
 
-
-    // Konstanta pro upravení názvu země
-    const country = Country.CZECHIA === person.country ? "Česká republika" : "Slovensko";
-
-    //Vyrenderování pomocí JSX 
-    return (
-        <>
-            <div>
-                <h1>Detail osoby</h1>
-                <hr/>
-                <h3>{person.name} ({person.identificationNumber})</h3>
-                <p>
-                    <strong>DIČ:</strong>
-                    <br/>
-                    {person.taxNumber}
-                </p>
-                <p>
-                    <strong>Bankovní účet:</strong>
-                    <br/>
-                    {person.accountNumber}/{person.bankCode} ({person.iban})
-                </p>
-                <p>
-                    <strong>Tel.:</strong>
-                    <br/>
-                    {person.telephone}
-                </p>
-                <p>
-                    <strong>Mail:</strong>
-                    <br/>
-                    {person.mail}
-                </p>
-                <p>
-                    <strong>Sídlo:</strong>
-                    <br/>
-                    {person.street}, {person.city},
-                    {person.zip}, {country}
-                </p>
-                <p>
-                    <strong>Poznámka:</strong>
-                    <br/>
-                    {person.note}
-                </p>
-                <hr/>
-                <InvoiceBuyer label="Počet přijatých faktur" invoicesList={sellerList} />
-                <InvoiceSeller label="Počet vydaných faktur" invoicesList={buyerList} />
-
-            </div>
-        </>
-    );
+  //Vyrenderování pomocí JSX
+  return (
+    <>
+      <div>
+        <h1>Detail osoby</h1>
+        <hr />
+        <div className="row">
+          <div className="col">
+            <h3>
+              {person.name} ({person.identificationNumber})
+            </h3>
+            <p>
+              <strong>DIČ:</strong>
+              <br />
+              {person.taxNumber}
+            </p>
+            <p>
+              <strong>Bankovní účet:</strong>
+              <br />
+              {person.accountNumber}/{person.bankCode} ({person.iban})
+            </p>
+            <p>
+              <strong>Tel.:</strong>
+              <br />
+              {person.telephone}
+            </p>
+            <p>
+              <strong>Mail:</strong>
+              <br />
+              {person.mail}
+            </p>
+            <p>
+              <strong>Sídlo:</strong>
+              <br />
+              {person.street}, {person.city},{person.zip}, {country}
+            </p>
+            <p>
+              <strong>Poznámka:</strong>
+              <br />
+              {person.note}
+            </p>
+          </div>
+          <div className="col">
+            <InvoiceBuyer
+              label="Počet přijatých faktur: "
+              invoicesList={sellerList}
+            />
+            <br />
+            <InvoiceSeller
+              label="Počet vydaných faktur: "
+              invoicesList={buyerList}
+            />
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default PersonDetail;
