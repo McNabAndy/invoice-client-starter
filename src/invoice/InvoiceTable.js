@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import dateStringFormatter from "../utils/dateStringFormatter";
 /**
  * 
  * @param {Object} props Vlastnosti komponenty
@@ -10,17 +11,24 @@ import {Link} from "react-router-dom";
  */
 
 const InvoiceTable = ({label, items, deleteInvoice}) => {
+
+    
+const date = dateStringFormatter
     //Vyrenderování pomocí JSX
     return (
         <div>
             <p>
-                {label} {items.length}
+            {items.length === 0 ? (
+                     <strong className="text-danger">{label}</strong>
+                     ) : (<strong className="text-success">{label}</strong>)
+            } {items.length}
             </p>
 
             <table className="table table-bordered table table-hover">
                 <thead className="table-primary">
                 <tr>
                     <th>#</th>
+                    <th>Číslo faktury</th>
                     <th>Dodavatel</th>
                     <th>Odběratel</th>
                     <th>Datum vystavení</th>
@@ -33,10 +41,11 @@ const InvoiceTable = ({label, items, deleteInvoice}) => {
                 {items.map((item, index) => (
                     <tr key={index + 1}>
                         <td>{index + 1}</td>
+                        <td>{item.invoiceNumber}</td>
                         <td>{item.seller.name}</td>
                         <td>{item.buyer.name}</td>
-                        <td>{item.issued}</td>
-                        <td>{item.dueDate}</td>
+                        <td>{dateStringFormatter(item.issued, true)}</td>
+                        <td>{dateStringFormatter(item.dueDate, true)}</td>
                         <td>{item.price}</td>
                         <td >
                             <div className="btn-group" style={{ width: '100%', display: 'flex'  }}>

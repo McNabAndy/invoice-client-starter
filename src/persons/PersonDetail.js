@@ -25,6 +25,7 @@ import { useParams } from "react-router-dom";
 import { apiGet } from "../utils/api";
 import Country from "./Country";
 import { InvoiceBuyer, InvoiceSeller } from "../invoice/InvoicePurchase";
+import {Link} from "react-router-dom";
 
 /**
  * Komponenta zobrazující detaily konkrétní osoby a seznamy přijatých a vydaných faktur.
@@ -128,6 +129,9 @@ const PersonDetail = () => {
             />
           </div>
         </div>
+          <Link to={"/persons"} className="btn btn-info">
+                Zpět
+          </Link>
       </div>
     </>
   );

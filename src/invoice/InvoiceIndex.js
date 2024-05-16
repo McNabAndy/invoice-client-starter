@@ -100,7 +100,7 @@ const InvoiceIndex = () => {
             <InvoiceTable
                 deleteInvoice={deleteInvoice}
                 items={invoices}
-                label="Počet faktur:"
+                label="Počet faktur odpovídající filtru:"
             />
         </div>
     );

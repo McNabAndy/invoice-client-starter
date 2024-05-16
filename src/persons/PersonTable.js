@@ -38,8 +38,11 @@ const PersonTable = ({label, items, deletePerson}) => {
     //Vyrenderování pomocí JSX
     return (
         <div>
-            <p>
-                {label} {items.length}
+             <p>
+            {items.length === 0 ? (
+                     <strong className="text-danger">{label}</strong>
+                     ) : (<strong className="text-success">{label}</strong>)
+            } {items.length}
             </p>
 
             <table className="table table-bordered bordered table table-hover">
@@ -47,6 +50,7 @@ const PersonTable = ({label, items, deletePerson}) => {
                 <tr>
                     <th className="col-sm-1">#</th>
                     <th>Jméno</th>
+                    <th>Email</th>
                     <th className="col-sm-3" colSpan={3}>Akce</th>
                 </tr>
                 </thead>
@@ -55,6 +59,7 @@ const PersonTable = ({label, items, deletePerson}) => {
                     <tr key={index + 1}>
                         <td>{index + 1}</td>
                         <td>{item.name}</td>
+                        <td>{item.mail}</td>
                         <td >
                             <div className="btn-group" style={{ width: '100%', display: 'flex'  }}>
                                 <Link

@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-
+import {Link} from "react-router-dom";
 import {apiGet} from "../utils/api";
 import Country from "../persons/Country";
+import { TransformCountry } from "../utils/helpers";
+import dateStringFormatter from "../utils/dateStringFormatter";
 
 /**
  * Komponenta `InvoiceDetail` zobrazuje detailní informace o faktuře načtené z API.
@@ -28,33 +30,57 @@ const InvoiceDetail = () => {
         .then((data) => {setInvoice(data)});
     }, [id]); // Závislost na ID zajišťuje aktualizaci dat při změně ID v URL.
 
+
+    // Převedení názvů země pomocí pomocné metody TransormCountry která používá komponentu Country
+    const sellerCountry = TransformCountry(invoice?.seller?.country);
+    const buyerCountry = TransformCountry(invoice?.buyer?.country);
+
     //Vyrenderování pomocí JSX - detailu faktury 
     return (
         <div>
             <h1>Detail faktury: {invoice.invoiceNumber}</h1>
+            <p><strong>Datum vystavení:</strong> {dateStringFormatter(invoice.issued, true)} <br />
+               <strong>Datum splatnosti:</strong> {dateStringFormatter(invoice.dueDate, true)}
+            </p>
             <hr />
             <div className="row">
                 <div className="col">
-                    <h2>Dodvatel</h2>
+                    <h3>Dodvatel</h3>
                     <p>{invoice?.seller?.name}<br/>
                     {invoice?.seller?.identificationNumber}<br/>
-                    {invoice?.seller?.country}
+                    {invoice?.seller?.street} <br/> 
+                    {invoice?.seller?.zip} {invoice?.seller?.city} <br/>
+                    {sellerCountry}
                    </p>  
                 </div>
                 <div className="col">
-                    <h2>Odběratel</h2>
+                    <h3>Odběratel</h3>
                     <p>{invoice?.buyer?.name}<br/>
                     {invoice?.buyer?.identificationNumber}<br/>
-                    {invoice?.buyer?.country}
+                    {invoice?.buyer?.street} <br/> 
+                    {invoice?.buyer?.zip} {invoice?.buyer?.city} <br/>
+                    {buyerCountry}
                    </p>  
                 </div>
             </div>
             <hr />
-            <h3>Položka</h3>
-            <p>{invoice.product}</p>
+            <div className="row">
+                <div className="col">
+                    <h4>Položka</h4>
+                    <p>{invoice.product}</p>
+                </div>
+                <div className="col">
+                    <h4>Cena</h4>
+                    <p>{invoice.price} Kč</p>
+                </div>
+            </div>
             <hr />
-            <h3>Cena</h3>
-            <h3>{invoice.price}</h3> 
+            <p><strong>Poznámka k faktuře:</strong> {invoice.note}</p>
+            <hr />
+            <br />
+            <Link to={"/persons"} className="btn btn-info">
+                Zpět
+            </Link>
         </div>
     );
 };
