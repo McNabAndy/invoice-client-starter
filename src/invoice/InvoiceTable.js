@@ -76,9 +76,6 @@ const date = dateStringFormatter
             <Link to={"/invoices/create"} className="btn btn-success me-2">
                 Nová faktura
             </Link>
-            <Link to={"/invoices/show/statistics"} className="btn btn-info">
-                Statistiky
-            </Link>
         </div>
     );
 };

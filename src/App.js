@@ -37,6 +37,7 @@ import InvoiceIndex from "./invoice/InvoiceIndex";
 import InvoiceDetail from "./invoice/InvoiceDetail";
 import InvoiceForm from "./invoice/InvoiceForm";
 import { InvoicesStatistic, PersonStatistic } from "./invoice/Statistic";
+import { StatisticIndex } from "./invoice/StatisticIndex";
 
 /**
  * React projekt umožňuje uživatelům spravovat informace o osobách a fakturách.
@@ -60,6 +61,11 @@ export function App() {
                 Faktury
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to={"/statistics"} className="nav-link">
+                Statistiky
+              </Link>
+            </li>
           </ul>
         </nav>
 
@@ -71,15 +77,18 @@ export function App() {
             <Route path="show/:id" element={<PersonDetail />} />
             <Route path="create" element={<PersonForm />} />
             <Route path="edit/:id" element={<PersonForm />} />
-            <Route path="show/statistics" element={<PersonStatistic/>} />
           </Route>
           <Route path="/invoices">
             <Route index element={<InvoiceIndex />} />
             <Route path="show/:id" element={<InvoiceDetail />} />
             <Route path="create" element={<InvoiceForm/>} />
             <Route path="edit/:id" element={<InvoiceForm />} />
-            <Route path="show/statistics" element={<InvoicesStatistic/>} />
           </Route>
+          <Route path="/statistics">
+            <Route index element={<StatisticIndex/>} />
+          </Route>
+          
+
         </Routes>
       </div>
     </Router>

@@ -129,7 +129,7 @@ const PersonDetail = () => {
             />
           </div>
         </div>
-          <Link to={"/persons"} className="btn btn-info">
+          <Link to={"/persons"} className="btn btn-primary">
                 Zpět
           </Link>
       </div>

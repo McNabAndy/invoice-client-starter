@@ -30,7 +30,7 @@ const InvoiceFilter = (props) => {
 //Vyrenderování pomocí JSX - filtru
   return (
     <form onSubmit={handleSubmit}>
-      <div className="row">
+      <div className="row mb-3 mt-3">
         <div className="col">
           <InputSelect
             name="buyerId"
@@ -64,7 +64,7 @@ const InvoiceFilter = (props) => {
         </div>
       </div>
 
-      <div className="row">
+      <div className="row mb-3 mt-3">
         <div className="col">
           <InputField
             type="number"

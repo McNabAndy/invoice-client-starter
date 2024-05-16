@@ -90,9 +90,6 @@ const PersonTable = ({label, items, deletePerson}) => {
                 Nová osoba
             </Link>
 
-            <Link to={"/persons/show/statistics"} className="btn btn-info">
-                Statistiky
-            </Link>
         </div>
     );
 };

@@ -30,21 +30,22 @@ export const InvoicesStatistic= () => {
         <div>
             <h1>Statistiky faktur</h1>
                 <hr/>
-                <p>
-                    <strong>Součet cen v aktuáním roce:</strong>
-                    <br/>
-                    {statistics.currentYearSum}
-                </p>
-                <p>
-                    <strong>Celkový součet cen :</strong>
-                    <br/>
-                    {statistics.allTimeSum}
-                </p>
-                <p>
-                    <strong>Počet faktur v databázy:</strong>
-                    <br/>
-                    {statistics.invoicesCount}
-                </p>
+                <table className="table table-bordered table table-hover">
+                <thead className="table-primary">
+                <tr>
+                    <th>Součet cen v aktuáním roce</th>
+                    <th>Celkový součet cen</th>
+                    <th>Počet faktur v databázy</th> 
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{statistics.currentYearSum}</td>
+                    <td>{statistics.allTimeSum}</td>
+                    <td>{statistics.invoicesCount}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     )
 
@@ -64,9 +65,10 @@ export const PersonStatistic= () => {
     return(
         <div>
         <h1>Statistiky osob</h1>
+        <p className="text-danger">*Přehled osob jejichž výnos je větší jak 0</p>  
         <hr/>
-        <table className="table table-bordered">
-                <thead>
+        <table className="table table-bordered table table-hover">
+                <thead className="table-primary">
                 <tr>
                     <th>ID v databázy</th>
                     <th>Jméno</th>
@@ -75,14 +77,18 @@ export const PersonStatistic= () => {
                 </thead>
                 <tbody>
                 {statistics.map((item, index) => (
-                    <tr key={index + 1}>
+                    item.revenue > 0 ?(
+                        <tr key={index + 1}>
                         <td>{item.personId}</td>
                         <td>{item.personName}</td>
                         <td>{item.revenue}</td>
                     </tr>
+                    ) : null
+                    
                 ))}
                 </tbody>
             </table>
+            
         </div>
     )
 }
