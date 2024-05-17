@@ -57,6 +57,7 @@ const InvoiceForm = () => {
   /**
    * Ošetřuje odeslání formuláře. Zpracuje vytvoření nebo aktualizaci faktury.
    * Po úspěšném odeslání přesměruje uživatele na stránku se seznamem faktur.
+   * Nastaví zpoždění pro přesměrování aby byla vidět flash message na stejné stránce
    *
    * @param {React.FormEvent<HTMLFormElement>} e - Událost odeslání formuláře
    */
@@ -70,7 +71,9 @@ const InvoiceForm = () => {
       .then((data) => {
         setSent(true);
         setSuccess(true);
-        navigate("/invoices");
+        setTimeout(() => {
+          navigate("/invoices");
+        }, 1000);
       })
       .catch((error) => {
         console.log(error.message);
@@ -103,7 +106,7 @@ const InvoiceForm = () => {
           <div className="col-3">
             <InputField
               required={true}
-              type="text"
+              type="number"
               name="invoiceNumber"
               min="3"
               label="Číslo faktury"
