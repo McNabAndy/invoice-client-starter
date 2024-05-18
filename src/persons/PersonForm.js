@@ -108,7 +108,7 @@ const PersonForm = () => {
   //Vyrenderování pomocí JSX
   return (
     <div>
-      <h1>{id ? "Upravit" : "Vytvořit"} osobnost</h1>
+      <h1>{id ? "Upravit" : "Vytvořit"} osobu</h1>
       <hr />
       {errorState ? (
         <div className="alert alert-danger">{errorState}</div>

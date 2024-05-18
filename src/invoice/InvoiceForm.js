@@ -89,7 +89,7 @@ const InvoiceForm = () => {
   //Vyrenderování pomocí JSX
   return (
     <div>
-      <h1>{id ? "Upravit" : "Vytvořit"} Fakturu</h1>
+      <h1>{id ? "Upravit" : "Vytvořit"} fakturu</h1>
       <hr />
       {errorState ? (
         <div className="alert alert-danger">{errorState}</div>
