@@ -35,7 +35,7 @@ export const InvoicesStatistic= () => {
                 <tr>
                     <th>Součet cen v aktuáním roce</th>
                     <th>Celkový součet cen</th>
-                    <th>Počet faktur v databázy</th> 
+                    <th>Počet faktur v databázi</th> 
                 </tr>
                 </thead>
                 <tbody>
@@ -70,7 +70,7 @@ export const PersonStatistic= () => {
         <table className="table table-bordered table table-hover">
                 <thead className="table-primary">
                 <tr>
-                    <th>ID v databázy</th>
+                    <th>ID v databázi</th>
                     <th>Jméno</th>
                     <th>Výnosy</th>
                 </tr>

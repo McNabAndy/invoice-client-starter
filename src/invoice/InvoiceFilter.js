@@ -93,7 +93,7 @@ const InvoiceFilter = (props) => {
             min="2"
             name="product"
             handleChange={handleChange}
-            label="Produkt"
+            label="Položka"
             prompt="neuveden"
             value={filter.product ? filter.product : ""}
           />
